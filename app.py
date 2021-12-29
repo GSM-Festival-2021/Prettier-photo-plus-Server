@@ -1,16 +1,11 @@
 import time
 import torch
-import os
 from PIL import Image
 from torch.autograd import Variable
 from torchvision.transforms import ToTensor, ToPILImage
-<<<<<<< HEAD
-from flask_cors import CORS, cross_origin
-from flask import Flask, jsonify, request, send_file, request, make_response, Response
-=======
+from flask_cors import CORS
+from flask import Flask, request, send_file, request
 
-from flask import Flask, jsonify, request, send_file
->>>>>>> 599c9f85dbe9892f258928b4cffdf446a54d45f1
 
 from model import Generator
 
