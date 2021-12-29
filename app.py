@@ -4,12 +4,13 @@ import os
 from PIL import Image
 from torch.autograd import Variable
 from torchvision.transforms import ToTensor, ToPILImage
-
-from flask import Flask, jsonify, request, send_file, request
+from flask_cors import CORS, cross_origin
+from flask import Flask, jsonify, request, send_file, request, make_response, Response
 
 from model import Generator
 
 app = Flask(__name__)
+CORS(app)
 
 def changeImg():
   upscale_factor = 4
@@ -29,11 +30,11 @@ def changeImg():
   out_img = ToPILImage()(out[0].data.cpu())
   out_img.save('images/result/response.png')
 
-@app.route('/') 
+@app.route('/')
 def hello():
   return 'hello world!'
 
-@app.route('/img', methods=['POST']) 
+@app.route('/img', methods=['POST'])
 def get_file():
   img = request.files['img']
   img.save(os.path.join('./images/result', 'request.png'))
