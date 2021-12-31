@@ -36,19 +36,25 @@ def changeImg():
 def hello():
   return 'hello world!'
 
-@app.route('/img', methods=['POST'])
+@app.route('/img', methods=['GET', 'POST'])
 def get_file():
-  print(request.files)
-  if (request.files.get('img')):
-    img = request.files['img']
-    img.save('./images/result/img.png')
-    changeImg()
+  if request.method == "POST":
+    print(request.files)
+    if (request.files.get('img')):
+      img = request.files['img']
+      img.save('./images/result/img.png')
+      try:
+        changeImg()
+      except:
+        return "모델 오류"
+      return send_file('./images/result/img.png')
+      # try:
+      # except:
+      #   return "모델 오류"
+    else:
+      return "잘못된 요청입니다."
+  elif request.method == "GET":
     return send_file('./images/result/img.png')
-    # try:
-    # except:
-    #   return "모델 오류"
-  else:
-    return "잘못된 요청입니다."
 
 if __name__ == '__main__':
   app.run()
